@@ -97,7 +97,7 @@ def get_player_info():
             return jsonify({
                 "status": "error",
                 "message": "Player ID is required",
-                "credits": "TEAM-AKIRU",
+                "credits": "GMG-ID-INFO",
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }), 400
 
@@ -106,7 +106,7 @@ def get_player_info():
             return jsonify({
                 "status": "error",
                 "message": "Failed to generate JWT token",
-                "credits": "TEAM-AKIRU",
+                "credits": "GMG-ID-INFO",
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }), 500
 
@@ -142,6 +142,7 @@ def get_player_info():
                         "server": parsed_data["1"]["data"]["5"]["data"],
                         "bio": parsed_data["9"]["data"]["9"]["data"],
                         "booyah_pass_level": parsed_data["1"]["data"]["18"]["data"],
+                        "bannerid": parsed_data["1"]["data"]["11"]["data"],
                         "account_created": datetime.fromtimestamp(parsed_data["1"]["data"]["44"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
                     }
                 }
@@ -166,9 +167,7 @@ def get_player_info():
                             "booyah_pass_level": parsed_data["7"]["data"]["18"]["data"],
                             "likes": parsed_data["7"]["data"]["21"]["data"],
                             "account_created": datetime.fromtimestamp(parsed_data["7"]["data"]["44"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
-                            "ldk": parsed_data["7"]["data"]["9"]["data"],
                         }
-                    
                     }
                 except:
                     player_data["Guild"] = None
@@ -177,7 +176,7 @@ def get_player_info():
                     "status": "success",
                     "message": "Player information retrieved successfully",
                     "data": player_data,
-                    "credits": "TEAM-AKIRU",
+                    "credits": "GMG-ID-INFO",
                     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 })
 
@@ -185,14 +184,14 @@ def get_player_info():
                 return jsonify({
                     "status": "error",
                     "message": f"Failed to parse player information: {str(e)}",
-                    "credits": "TEAM-AKIRU",
+                    "credits": "GMG-ID-INFO",
                     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }), 500
 
         return jsonify({
             "status": "error",
             "message": f"API request failed with status code: {response.status_code}",
-            "credits": "TEAM-AKIRU",
+            "credits": "GMG-ID-INFO",
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }), response.status_code
 
@@ -200,7 +199,7 @@ def get_player_info():
         return jsonify({
             "status": "error",
             "message": f"An unexpected error occurred: {str(e)}",
-            "credits": "TEAM-AKIRU",
+            "credits": "GMGIDINFO",
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }), 500
 
@@ -208,4 +207,4 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
    
   
-# Share with credits TEAM-AKIRU
+# Share with credits GMGIDINFO
