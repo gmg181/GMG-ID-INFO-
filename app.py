@@ -166,7 +166,7 @@ def get_player_info():
                             "booyah_pass_level": parsed_data["7"]["data"]["18"]["data"],
                             "likes": parsed_data["7"]["data"]["21"]["data"],
                             "account_created": datetime.fromtimestamp(parsed_data["7"]["data"]["44"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
-                            "likes": parsed_data["7"]["data"]["9"]["data"],
+                            "ldk": parsed_data["7"]["data"]["9"]["data"],
                         }
                     
                     }
