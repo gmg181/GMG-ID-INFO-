@@ -145,7 +145,7 @@ def get_player_info():
                         "bannerid": parsed_data["1"]["data"]["11"]["data"],
                         "Avatarid": parsed_data["1"]["data"]["12"]["data"],
                         "petid": parsed_data["1"]["data"]["7"]["data"],
-                        "idk": parsed_data["1"]["data"]["2"]["data"],
+                        "idk": parsed_data["1"]["data"]["1"]["data"],
                         "account_created": datetime.fromtimestamp(parsed_data["1"]["data"]["44"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
                     }
                 }
