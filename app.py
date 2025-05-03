@@ -147,7 +147,7 @@ def get_player_info():
                         "petid": parsed_data["1"]["data"]["7"]["data"],
                         "pinid": parsed_data["1"]["data"]["33"]["data"],
                         "idk": parsed_data["1"]["data"]["31"]["data"],
-                        account_created": datetime.fromtimestamp(parsed_data["1"]["data"]["43"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
+                        "account_created": datetime.fromtimestamp(parsed_data["1"]["data"]["43"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
                         "account_created": datetime.fromtimestamp(parsed_data["1"]["data"]["44"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
                     }
                 }
