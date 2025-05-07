@@ -10,9 +10,9 @@ import json
 app = Flask(__name__)
 
 # FF INFO ACC 
-DEFAULT_UID = "3197059560"
-DEFAULT_PASS = "3EC146CD4EEF7A640F2967B06D7F4413BD4FB37382E0ED260E214E8BACD96734"
-JWT_GEN_URL = "https://ariflexlabs-jwt-gen.onrender.com/fetch-token"
+DEFAULT_UID = "3024330303"
+DEFAULT_PASS = "jnnw4v5u1bj4wu"
+JWT_GEN_URL = "https://jwt-ff-gmg-token.vercel.app/token"
 
 # GET JWT
 def get_jwt():
@@ -24,7 +24,7 @@ def get_jwt():
         response = requests.get(JWT_GEN_URL, params=params)
         if response.status_code == 200:
             jwt_data = response.json()
-            return jwt_data.get("JWT TOKEN")
+            return jwt_data.get("token")
         return None
     except Exception as e:
         return None
@@ -105,13 +105,13 @@ def get_player_info():
         if not jwt_token:
             return jsonify({
                 "status": "error",
-                "message": "Failed to generate JWT token",
+                "message": "Failed to generate token",
                 "credits": "GMG-ID-INFO",
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }), 500
 
         data = bytes.fromhex(encrypt_api(f"08{Encrypt_ID(player_id)}1007"))
-        url = "https://client.ind.freefiremobile.com/GetPlayerPersonalShow"
+        url = "https://client.us.freefiremobile.com/GetPlayerPersonalShow"
         headers = {
             'X-Unity-Version': '2018.4.11f1',
             'ReleaseVersion': 'OB48',
@@ -134,23 +134,29 @@ def get_player_info():
 
             try:
                 player_data = {
-                    "basic_info": {
-                        "name": parsed_data["1"]["data"]["3"]["data"],
-                        "id": player_id,
-                        "likes": parsed_data["1"]["data"]["21"]["data"],
-                        "level": parsed_data["1"]["data"]["6"]["data"],
-                        "server": parsed_data["1"]["data"]["5"]["data"],
-                        "bio": parsed_data["9"]["data"]["9"]["data"],
-                        "booyah_pass_level": parsed_data["1"]["data"]["18"]["data"],
-                        "bannerid": parsed_data["1"]["data"]["11"]["data"],
-                        "Avatarid": parsed_data["1"]["data"]["12"]["data"],
-                        "petid": parsed_data["1"]["data"]["7"]["data"],
-                        "pinid": parsed_data["1"]["data"]["33"]["data"],
-                        "idk": parsed_data["1"]["data"]["31"]["data"],
-                        "lastlongi": datetime.fromtimestamp(parsed_data["1"]["data"]["24"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
-                        "account_created": datetime.fromtimestamp(parsed_data["1"]["data"]["44"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
-                    }
-                }
+    "basic_info": {
+        "name": parsed_data["1"]["data"].get("3", {}).get("data", None),
+        "id": player_id,
+        "likes": parsed_data["1"]["data"].get("21", {}).get("data", None),
+        "level": parsed_data["1"]["data"].get("6", {}).get("data", None),
+        "server": parsed_data["1"]["data"].get("5", {}).get("data", None),
+        "bio": parsed_data["9"]["data"].get("9", {}).get("data", None),
+        "booyah_pass_level": parsed_data["1"]["data"].get("18", {}).get("data", None),
+        "bannerid": parsed_data["1"]["data"].get("11", {}).get("data", None),
+        "avaterid": parsed_data["1"]["data"].get("12", {}).get("data", None),
+        "pinid": parsed_data["1"]["data"].get("33", {}).get("data", None),
+        "exp": parsed_data["1"]["data"].get("7", {}).get("data", None),
+        "brrankpoint": parsed_data["1"]["data"].get("14", {}).get("data", None),
+        "brrankscore": parsed_data["1"]["data"].get("15", {}).get("data", None),
+        "csrankpoint": parsed_data["1"]["data"].get("30", {}).get("data", None),
+        "csrankscore": parsed_data["1"]["data"].get("31", {}).get("data", None),
+        "accountseason": parsed_data["1"]["data"].get("20", {}).get("data", None),
+        "bpid": parsed_data["1"]["data"].get("19", {}).get("data", None),
+        "tittle": parsed_data["1"]["data"].get("48", {}).get("data", None),
+        "account_created": datetime.fromtimestamp(parsed_data["1"]["data"].get("44", {}).get("data", 0)).strftime("%Y-%m-%d %H:%M:%S") if parsed_data["1"]["data"].get("44", {}).get("data") else None
+    }
+}
+
 
                 try:
                     player_data["animal"] = {
@@ -161,19 +167,20 @@ def get_player_info():
 
                 try:
                     player_data["Guild"] = {
-                        "name": parsed_data["6"]["data"]["2"]["data"],
-                        "id": parsed_data["6"]["data"]["1"]["data"],
-                        "level": parsed_data["6"]["data"]["4"]["data"],
-                        "members_count": parsed_data["6"]["data"]["6"]["data"],
-                        "leader": {
-                            "id": parsed_data["6"]["data"]["3"]["data"],
-                            "name": parsed_data["7"]["data"]["3"]["data"],
-                            "level": parsed_data["7"]["data"]["6"]["data"],
-                            "booyah_pass_level": parsed_data["7"]["data"]["18"]["data"],
-                            "likes": parsed_data["7"]["data"]["21"]["data"],
-                            "account_created": datetime.fromtimestamp(parsed_data["7"]["data"]["44"]["data"]).strftime("%Y-%m-%d %H:%M:%S")
-                        }
-                    }
+    "name": parsed_data["6"]["data"].get("2", {}).get("data", None),
+    "id": parsed_data["6"]["data"].get("1", {}).get("data", None),
+    "level": parsed_data["6"]["data"].get("4", {}).get("data", None),
+    "members_count": parsed_data["6"]["data"].get("6", {}).get("data", None),
+    "leader": {
+        "id": parsed_data["6"]["data"].get("3", {}).get("data", None),
+        "name": parsed_data["7"]["data"].get("3", {}).get("data", None),
+        "level": parsed_data["7"]["data"].get("6", {}).get("data", None),
+        "booyah_pass_level": parsed_data["7"]["data"].get("18", {}).get("data", None),
+        "likes": parsed_data["7"]["data"].get("21", {}).get("data", None),
+        "lastlogin": datetime.fromtimestamp(parsed_data["1"]["data"].get("24", {}).get("data", 0)).strftime("%Y-%m-%d %H:%M:%S") if parsed_data["1"]["data"].get("24", {}).get("data") else None
+    }
+}
+
                 except:
                     player_data["Guild"] = None
 
