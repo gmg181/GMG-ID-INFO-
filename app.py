@@ -10,8 +10,8 @@ import json
 app = Flask(__name__)
 
 # FF INFO ACC 
-DEFAULT_UID = "3024330303"
-DEFAULT_PASS = "jnnw4v5u1bj4wu"
+DEFAULT_UID = "3917745723"
+DEFAULT_PASS = "F5922510D730970E6844CAC0ABD72DD650D88708B1736CB9E9411BCE6F867393"
 JWT_GEN_URL = "https://jwt-ff-gmg-token.vercel.app/token"
 
 # GET JWT
@@ -158,10 +158,21 @@ def get_player_info():
 }
 
 
+                player_data["last"] = {
+    "account_created": datetime.fromtimestamp(
+        parsed_data["1"]["data"].get("24", {}).get("data", 0)
+    ).strftime("%Y-%m-%d %H:%M:%S") if parsed_data["1"]["data"].get("44", {}).get("data") else None
+}
+
                 try:
                     player_data["animal"] = {
-                        "name": parsed_data["8"]["data"]["2"]["data"]
+                        "petname": parsed_data["8"]["data"].get("2", {}).get("data", None),
+                        "petexp": parsed_data["8"]["data"].get("4", {}).get("data", None),
+                        "petlvl": parsed_data["8"]["data"].get("3", {}).get("data", None),
+                        "petskill": parsed_data["8"]["data"].get("9", {}).get("data", None),
+                        "petid": parsed_data["8"]["data"].get("6", {}).get("data", None),
                     }
+                    
                 except:
                     player_data["animal"] = None
 
